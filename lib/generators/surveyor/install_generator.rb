@@ -9,7 +9,7 @@ module Surveyor
     desc "Generate surveyor README, migrations, assets and sample survey"
     class_option :skip_migrations, :type => :boolean, :desc => "skip migrations, but generate everything else"
 
-    SURVEYOR_MIGRATIONS = %w()
+    SURVEYOR_MIGRATIONS = %w(init_surveyor)
 
     def readme
       copy_file "../../../../README.md", "#{vendor_dir}/README.md"
@@ -39,12 +39,11 @@ module Surveyor
     end
 
     def surveys
-      survey_dir = "#{vendor_dir}/surveys"
-      copy_file "#{survey_dir}/kitchen_sink_survey.rb"
-      copy_file "#{survey_dir}/quiz.rb"
-      copy_file "#{survey_dir}/date_survey.rb"
-      copy_file "#{survey_dir}/languages.rb"
-      directory "#{survey_dir}/translations"
+      surveys_vendor_dir = "#{vendor_dir}/surveys"
+      %w{date_survey kitchen_sink_survey languages quiz}.each do |survey|
+        copy_file "surveys/#{survey}.rb", "#{surveys_vendor_dir}/#{survey}.rb"
+      end
+      #directory "#{surveys_vendor_dir}/translations"
     end
 
     def locales

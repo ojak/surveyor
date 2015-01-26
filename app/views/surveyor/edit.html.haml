@@ -13,6 +13,8 @@
     = render 'partials/dependents' unless @dependents.empty?
     = render "/partials/section", :f => f
     .next_section= next_section
+    %div{style:'clear:both'}
+
   %br
 
 :javascript
